@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const validateRegisterInput = require('../../modules/user/userValidations');
-const reCaptchaValidator = require('../../middleware/recaptcha.middleware')
 
 const loginLogs = require('../../modules/user/loginlogs/loginlogController').loginLogController;
 const uploadHelper = require('../../helper/upload.helper')
@@ -160,5 +159,6 @@ router.get('/profile', authentication, userModule.GetProfile);
  * @access Public
  */
 router.post('/profile', authentication, uploadHelper.uploadFiles('public/user/', 'single', 'file'), validateRegisterInput.sanitizeUpdateUserProfile, validateRegisterInput.validateUpdateUserProfile, userModule.postProfile);
+router.post('/multiple', authentication, authorization, userModule.selectMultipleData);
 
 module.exports = router;

@@ -92,7 +92,7 @@ const appReducer = (state = initialState, action = { type: '' }) =>
             [action.payload.data.key]: action.payload.data._id,
           },
           is_page: {
-            ...draft.content.ids,
+            ...draft.content.is_page,
             [action.payload.data.key]: action.payload.data.is_page,
           },
         };
@@ -125,8 +125,6 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         break;
       case types.ENQUEUE_SNACKBAR:
         draft.notifications = [...draft.notifications, { ...action.payload }];
-        // console.log('action.paylod', action.payload);
-
         break;
       case types.REMOVE_SNACKBAR:
         draft.notifications = [
@@ -143,7 +141,8 @@ const appReducer = (state = initialState, action = { type: '' }) =>
         break;
 
       case types.LOAD_FAQ_SUCCESS:
-        draft.faqData = action.payload.data;
+        const tempKey = action.payload.data.cat.key;
+        draft.faqData = { ...draft.faqData, [tempKey]: action.payload.data };
     }
   });
 
